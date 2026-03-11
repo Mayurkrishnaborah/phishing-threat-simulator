@@ -134,7 +134,7 @@ This project is licensed under the [MIT License](LICENSE).
 ---
 
 <p align="center">
-  Made with ❤️ by <a href="https://github.com/Mayurkrishnaborah">Mayur Krishna Borah</a>
+  Made with ❤️ by <a href="https://github.com/Mayurkrishnaborah">Mayur Krishna Dev Borah</a>
 </p>
 <p align="center">
   <sub>Built for educational purposes only. No real credentials are collected.</sub>
