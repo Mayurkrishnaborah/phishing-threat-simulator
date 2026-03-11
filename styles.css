@@ -1,0 +1,368 @@
+/* ══════════════════════════════════════════════════════════
+   CyberShield — Premium Styles
+   Parallax · Particles · Neon Glow · Scan Lines
+   ══════════════════════════════════════════════════════════ */
+
+/* ─── BASE ─── */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: #050415;
+  overflow-x: hidden;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #4338ca55; border-radius: 99px; }
+
+/* ─── ANIMATED GRADIENT BACKGROUND ─── */
+.cyber-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(99,102,241,.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(139,92,246,.10) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(236,72,153,.06) 0%, transparent 50%),
+    #050415;
+  animation: bgShift 12s ease-in-out infinite alternate;
+}
+@keyframes bgShift {
+  0%   { background-position: 0% 0%, 100% 0%, 50% 100%; }
+  100% { background-position: 20% 20%, 80% 40%, 30% 60%; }
+}
+
+/* ─── GRID OVERLAY ─── */
+.grid-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background-image:
+    linear-gradient(rgba(99,102,241,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99,102,241,.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+}
+
+/* ─── SCAN LINES ─── */
+.scan-lines {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(99,102,241,.015) 2px,
+    rgba(99,102,241,.015) 4px
+  );
+}
+.scan-lines::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(99,102,241,.04) 50%,
+    transparent 100%
+  );
+  height: 120px;
+  animation: scanMove 4s linear infinite;
+}
+@keyframes scanMove {
+  0%   { transform: translateY(-120px); }
+  100% { transform: translateY(100vh); }
+}
+
+/* ─── FLOATING PARTICLES ─── */
+.particles-container {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0;
+  animation: floatUp linear infinite;
+}
+@keyframes floatUp {
+  0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+}
+
+/* ─── PARALLAX LAYERS ─── */
+.parallax-wrapper {
+  perspective: 1px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+[data-parallax] {
+  will-change: transform;
+  transition: transform 0.1s linear;
+}
+
+/* ─── CARD GLOW ─── */
+.card-glow {
+  position: relative;
+  transition: box-shadow .4s ease, transform .3s ease;
+}
+.card-glow::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(99,102,241,.2), rgba(139,92,246,.1), rgba(236,72,153,.1), transparent);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity .4s ease;
+}
+.card-glow:hover {
+  box-shadow: 0 0 30px rgba(99,102,241,.2), 0 0 60px rgba(99,102,241,.05);
+  transform: translateY(-2px);
+}
+.card-glow:hover::before { opacity: 1; }
+
+/* ─── NEON TEXT ─── */
+.neon-text {
+  text-shadow:
+    0 0 7px rgba(99,102,241,.6),
+    0 0 10px rgba(99,102,241,.4),
+    0 0 21px rgba(99,102,241,.2);
+}
+
+/* ─── HEADER GLOW BAR ─── */
+.header-glow {
+  position: relative;
+}
+.header-glow::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(99,102,241,.5), rgba(139,92,246,.3), transparent);
+}
+
+/* ─── RED FLAG STYLES ─── */
+.red-flag {
+  position: relative;
+  cursor: pointer;
+  border-bottom: 2px dashed #f87171;
+  transition: background .25s, color .25s, border-color .25s;
+}
+.red-flag:hover {
+  background: rgba(248,113,113,.15);
+}
+.red-flag.revealed {
+  background: rgba(248,113,113,.18);
+  border-bottom-color: #ef4444;
+}
+.red-flag.revealed::after {
+  content: '⚠';
+  position: absolute;
+  top: -6px;
+  right: -14px;
+  font-size: .7rem;
+  animation: popIn .3s ease-out both;
+}
+@keyframes popIn {
+  0%   { transform: scale(0); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Test Mode: hide hints */
+body.test-mode .red-flag:not(.revealed) {
+  border-bottom-color: transparent;
+}
+body.test-mode .malicious-btn:not(.revealed) {
+  box-shadow: none;
+}
+body.test-mode [data-tip]:not(.revealed)::before {
+  display: none;
+}
+
+/* ─── MALICIOUS BUTTON ─── */
+.malicious-btn {
+  cursor: pointer;
+  transition: transform .2s, box-shadow .2s;
+}
+.malicious-btn:hover { transform: scale(1.03); }
+.malicious-btn.revealed {
+  outline: 3px dashed #ef4444;
+  outline-offset: 3px;
+}
+
+/* ─── RISK METER ─── */
+.risk-fill { transition: width .8s cubic-bezier(.22,1,.36,1); }
+
+/* ─── SVG GAUGE GLOW ─── */
+.gauge-container {
+  filter: drop-shadow(0 0 8px rgba(245,158,11,.15));
+}
+
+/* ─── LOG ENTRY ─── */
+.log-entry {
+  animation: slideUp .4s ease-out both;
+}
+@keyframes slideUp {
+  0%   { transform: translateY(12px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* ─── TOOLTIPS ─── */
+[data-tip]::before {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) scale(.92);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: .72rem;
+  line-height: 1.35;
+  width: max-content;
+  max-width: 220px;
+  background: #1e1b4b;
+  color: #e0e7ff;
+  border: 1px solid rgba(67,56,202,.3);
+  box-shadow: 0 4px 12px rgba(0,0,0,.3);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s, transform .25s;
+  z-index: 50;
+}
+[data-tip]:hover::before { opacity: 1; transform: translateX(-50%) scale(1); }
+
+/* ─── EMAIL CLIENT CHROME ─── */
+.email-chrome {
+  position: relative;
+  overflow: hidden;
+}
+.email-chrome::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: linear-gradient(180deg, rgba(99,102,241,.03), transparent);
+  pointer-events: none;
+}
+
+/* ─── ANIMATED BORDER GRADIENT ─── */
+.animated-border {
+  position: relative;
+}
+.animated-border::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--border-angle, 0deg),
+    transparent 30%,
+    rgba(99,102,241,.4) 50%,
+    transparent 70%
+  );
+  z-index: -1;
+  animation: rotateBorder 6s linear infinite;
+}
+@keyframes rotateBorder {
+  to { --border-angle: 360deg; }
+}
+/* Fallback for browsers that don't support @property */
+@property --border-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* ─── PULSE RING ─── */
+.pulse-ring {
+  position: relative;
+}
+.pulse-ring::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  border: 2px solid rgba(99,102,241,.2);
+  animation: pulseRing 2s ease-out infinite;
+}
+@keyframes pulseRing {
+  0%   { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1.08); opacity: 0; }
+}
+
+/* ─── STAGGER FADE IN ─── */
+.stagger-1 { animation: fadeSlideUp .5s ease-out .1s both; }
+.stagger-2 { animation: fadeSlideUp .5s ease-out .2s both; }
+.stagger-3 { animation: fadeSlideUp .5s ease-out .3s both; }
+.stagger-4 { animation: fadeSlideUp .5s ease-out .4s both; }
+@keyframes fadeSlideUp {
+  0%   { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* ─── TYPING CURSOR ─── */
+.typing-cursor::after {
+  content: '|';
+  animation: blink 1s step-start infinite;
+  color: #6366f1;
+  font-weight: 300;
+}
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+/* ─── CORNER DECORATIONS ─── */
+.corner-deco {
+  position: relative;
+}
+.corner-deco::before,
+.corner-deco::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-color: rgba(99,102,241,.3);
+  border-style: solid;
+}
+.corner-deco::before {
+  top: -1px;
+  left: -1px;
+  border-width: 2px 0 0 2px;
+}
+.corner-deco::after {
+  bottom: -1px;
+  right: -1px;
+  border-width: 0 2px 2px 0;
+}
+
+/* ─── STAT CARD HOVER ─── */
+.stat-card {
+  transition: all .3s ease;
+  border: 1px solid rgba(67,56,202,.15);
+}
+.stat-card:hover {
+  border-color: rgba(99,102,241,.3);
+  background: rgba(30,27,75,.8);
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 640px) {
+  .mobile-mode-toggle {
+    display: flex !important;
+  }
+}
